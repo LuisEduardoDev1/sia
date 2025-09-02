@@ -1,8 +1,8 @@
 import re
 import pandas as pd
 
-positivas = ["avanço", "progresso", "sucesso", "oportunidade", "benefício", "melhoria", "crescimento", "promove", "melhora"]
-negativas = ["problema", "crise", "risco", "ameaça", "falha", "dificuldade", "desafio", "perigo", "danos", "perda"]
+positivas = ["avanço", "progresso", "sucesso", "oportunidade", "benefício", "melhoria", "crescimento", "promove", "melhora", "ganho"]
+negativas = ["problema", "crise", "risco", "ameaça", "falha", "dificuldade", "desafio", "perigo", "danos", "perda", "medo", "perda"]
 
 def limpar_texto(texto: str) -> str:
     if not isinstance(texto, str):

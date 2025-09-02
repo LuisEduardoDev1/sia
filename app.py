@@ -26,24 +26,46 @@ def main():
     df_processado = df_processado[df_processado["termo"].isin(termo_filtro)]
 
 
-    # Gráfico pizza com percentual de quantidade de notícias por sentimento
     st.subheader("📌 Distribuição de Sentimentos")
-    counts = df_processado["sentimento"].value_counts()
+    
+    col1, col2 = st.columns(2)
 
-    fig1, ax1 = plt.subplots(figsize=(3, 3), dpi=11)
+    # Gráfico pizza com percentual de quantidade de notícias por sentimento
+    with col1:
+        counts = df_processado["sentimento"].value_counts()
 
-    def func(pct, allvalues):
-        absolute = int(round(pct/100.*sum(allvalues)))
-        return f"{absolute}\n({pct:.1f}%)"
+        fig1, ax1 = plt.subplots(figsize=(3, 3), dpi=11)
 
-    ax1.pie(
-        counts,
-        labels=counts.index,
-        autopct=lambda pct: func(pct, counts),
-        textprops={'fontsize': 8}
-    )
-    ax1.axis("equal")
-    st.pyplot(fig1, use_container_width=False)
+        def func(pct):
+            return f"({pct:.1f}%)"
+        
+        cores = ["#4CAF50", "#F44336", "#FFC107"][:len(counts)]
+
+        ax1.pie(
+            counts,
+            labels=counts.index,
+            autopct=lambda pct: func(pct),
+            textprops={'fontsize': 6},
+            colors=cores
+        )
+        ax1.axis("equal")
+        st.pyplot(fig1, use_container_width=False)
+
+
+    # Gráfico de colunas
+    with col2:
+        fig, ax = plt.subplots(figsize=(3, 2), dpi=11)
+        ax.bar(
+            counts.index,
+            counts.values, 
+            color=["#4CAF50", "#F44336", "#FFC107"]
+            )
+        ax.set_xlabel("Sentimentos")
+        ax.set_ylabel("Quantidade")
+        ax.set_title("Distribuição de Sentimentos")
+
+        st.pyplot(fig, use_container_width=False)
+
 
     # Nuvem de palavras
     st.subheader("☁️ Nuvem de Palavras")
@@ -64,8 +86,7 @@ def main():
     # Rodapé
     st.markdown("""
     ---
-    ⚠️ *Aviso: Esta análise de sentimento é baseada em regras simples e pode não capturar sarcasmo ou contextos complexos.*  
-    👨‍💻 Algumas partes do código foram desenvolvidas com auxílio de modelos de IA.
+    ⚠️ *Aviso: Esta análise de sentimento é baseada em regras simples de comparação de strings e pode não capturar sarcasmo ou contextos complexos.*  
     """)
 
 if __name__ == "__main__":
