@@ -39,4 +39,6 @@ if __name__ == "__main__":
         {"titulo": "Avanço da IA no Piauí", "descricao": "Um grande progresso"},
         {"titulo": "Crise em projeto de IA", "descricao": "Problemas dificultam o uso"}
     ])
-    print(processar_noticias(dados_teste)[["titulo", "sentimento"]])
+    
+    resultado = processar_noticias(dados_teste)
+    print(resultado[["titulo", "sentimento"]])
