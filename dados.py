@@ -31,6 +31,3 @@ def coletar_noticias(termo, max_noticias=15):
     
     return pd.DataFrame(noticias)
 
-if __name__ == "__main__":
-    df = coletar_noticias("Inteligência Artificial Piauí")
-    print(df.head(10))

@@ -32,13 +32,3 @@ def processar_noticias(df: pd.DataFrame) -> pd.DataFrame:
     df["texto_limpo"] = (df["titulo"].fillna("") + " " + df["descricao"].fillna("")).apply(limpar_texto)
     df["sentimento"] = df["texto_limpo"].apply(analisar_sentimento)
     return df
-
-if __name__ == "__main__":
-    # Teste rápido
-    dados_teste = pd.DataFrame([
-        {"titulo": "Avanço da IA no Piauí", "descricao": "Um grande progresso"},
-        {"titulo": "Crise em projeto de IA", "descricao": "Problemas dificultam o uso"}
-    ])
-    
-    resultado = processar_noticias(dados_teste)
-    print(resultado[["titulo", "sentimento"]])
