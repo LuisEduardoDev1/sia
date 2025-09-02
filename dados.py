@@ -25,7 +25,12 @@ def coletar_noticias(termo, max_noticias=15):
             titulo = item.find("title").text
             link = item.find("link").text
             descricao = item.find("description").text if item.find("description") is not None else ""
-            noticias.append({"titulo": titulo, "link": link, "descricao": descricao})
+            noticias.append({
+                "titulo": titulo, 
+                "link": link, 
+                "descricao": descricao, 
+                "termo": termo
+            })
     else:
         print(f"Erro na requisição. Status code: {resposta.status_code}")
     
