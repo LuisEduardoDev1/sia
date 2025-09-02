@@ -6,7 +6,7 @@ import pandas as pd
 def main():
     st.set_page_config(page_title="Monitoramento IA no Piauí", layout="wide")
 
-    st.title("📊 Monitoramento de Notícias - IA no Piauí")
+    st.title("📊 Dashboard de Notícias - IA no Piauí")
     st.markdown("Este painel mostra notícias coletadas do Google News com análise de sentimento simples.")
 
     # Carregar dados do CSV 
@@ -22,7 +22,7 @@ def main():
 
     # Filtro de termo
     termo_busca = ["Inteligência Artificial Piauí", "SIA Piauí"]
-    termo_filtro = st.multiselect("Selecione os termos de busca:", termo_busca)
+    termo_filtro = st.multiselect("Selecione os termos de busca:", termo_busca, default=termo_busca)
     df_processado = df_processado[df_processado["termo"].isin(termo_filtro)]
 
 
@@ -31,7 +31,17 @@ def main():
     counts = df_processado["sentimento"].value_counts()
 
     fig1, ax1 = plt.subplots(figsize=(3, 3), dpi=11)
-    ax1.pie(counts, labels=counts.index, autopct="%1.1f%%")
+
+    def func(pct, allvalues):
+        absolute = int(round(pct/100.*sum(allvalues)))
+        return f"{absolute}\n({pct:.1f}%)"
+
+    ax1.pie(
+        counts,
+        labels=counts.index,
+        autopct=lambda pct: func(pct, counts),
+        textprops={'fontsize': 8}
+    )
     ax1.axis("equal")
     st.pyplot(fig1, use_container_width=False)
 
